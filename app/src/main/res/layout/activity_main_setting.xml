@@ -28,7 +28,7 @@
         android:textStyle="bold|italic" />
 
     <TextView
-        android:id="@+id/settingtextView"
+        android:id="@+id/settingTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:freezesText="false"
@@ -52,15 +52,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:foreground="@drawable/computer_icons_red_polka_dot_clip_art_red_button_icon_png_49783419126ac1f3a4e00ddc5643ac6c"
-            app:icon="@drawable/computer_icons_red_polka_dot_clip_art_red_button_icon_png_49783419126ac1f3a4e00ddc5643ac6c" />
+            android:foreground="@drawable/ball_red"
+            android:onClick="onRedBallClick"
+            app:icon="@drawable/ball_red" />
 
         <Button
             android:id="@+id/ButtonBallBlue"
             android:layout_width="wrap_content"
             android:layout_height="154dp"
             android:layout_weight="1"
-            android:foreground="@drawable/ball_blue" />
+            android:foreground="@drawable/ball_blue"
+            android:onClick="onBlueBallClick" />
 
         <Button
             android:id="@+id/ButtonBallGreen"
@@ -68,7 +70,7 @@
             android:layout_height="154dp"
             android:layout_weight="1"
             android:foreground="@drawable/ball_green"
-            android:onClick="colourballred" />
+            android:onClick="onGreenBallClick" />
 
     </LinearLayout>
 
@@ -157,7 +159,7 @@
             android:id="@+id/button"
             android:layout_width="114dp"
             android:layout_height="match_parent"
-            android:foreground="@drawable/pngfind_com_back_button_png_2641123"
+            android:foreground="@drawable/back_button"
             android:onClick="backToMainSetting"
             android:textAlignment="center" />
     </LinearLayout>
