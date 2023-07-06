@@ -11,4 +11,5 @@
     <string name="settings_choose_control">choose control</string>
     <string name="settings_color_of_the_ball">choose the color of the ball</string>
     <string name="dancing_ball_setting_activity_title">Dancing Ball Setting</string>
+    <string name="title_activity_maze">MazeActivity</string>
 </resources>
