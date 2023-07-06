@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         WindowInsetsControllerCompat windowInsetsController =
                 WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         // Configure the behavior of the hidden system bars.
@@ -22,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+    }
+    public void closeApplicationBtn(View view) {
+        finishAffinity(); // Cierra todas las actividades abiertas en la aplicación
+        System.exit(0); // Finaliza el proceso de la aplicación
+    }
 
+    public void opennsettingBtn(View view) {
+        Intent intent = new Intent(this, MainSetting.class);
+        startActivity(intent);
     }
 }
