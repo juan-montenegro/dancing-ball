@@ -69,23 +69,25 @@ public class Maingame extends AppCompatActivity implements SensorEventListener {
         float xS = (xVel / 2) * frameTime;
         float yS = (yVel / 2) * frameTime;
 
-        xPos -= xS;
-        yPos -= yS;
+        float newXPos = xPos - xS;
+        float newYPos = yPos - yS;
 
-        if (xPos > xMax) {
-            xPos = xMax;
-        } else if (xPos < 0) {
-            xPos = 0;
+        // Rebotar en los bordes del eje X
+        if (newXPos > xMax || newXPos < 0) {
+            xVel = -xVel * 0.8f; // Invertir y reducir la velocidad en el eje X (factor de amortiguamiento: 0.8f)
         }
 
-        if (yPos > yMax) {
-            yPos = yMax;
-        } else if (yPos < 0) {
-            yPos = 0;
+        // Rebotar en los bordes del eje Y
+        if (newYPos > yMax || newYPos < 0) {
+            yVel = -yVel * 0.8f; // Invertir y reducir la velocidad en el eje Y (factor de amortiguamiento: 0.8f)
         }
+
+        xPos = xPos - xVel * frameTime; // Actualizar la posición en el eje X considerando la velocidad
+        yPos = yPos - yVel * frameTime; // Actualizar la posición en el eje Y considerando la velocidad
     }
 
-    @Override
+
+        @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }

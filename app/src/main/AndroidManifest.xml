@@ -13,12 +13,6 @@
         android:theme="@style/Theme.DancingBall"
         tools:targetApi="33">
         <activity
-            android:name=".MazeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_maze"
-            android:theme="@style/Theme.DancingBall.Fullscreen" />
-        <activity
             android:name=".Maingame"
             android:exported="false" />
         <activity
