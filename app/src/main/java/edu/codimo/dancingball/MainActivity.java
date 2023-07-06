@@ -35,4 +35,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainSetting.class);
         startActivity(intent);
     }
+
+    public void onStartClick(View view) {
+        Intent intent = new Intent(this, MazeActivity.class);
+        startActivity(intent);
+    }
 }

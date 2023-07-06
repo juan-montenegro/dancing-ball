@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black_overlay"
+            android:onClick="onStartClick"
             android:text="@string/btn_start_text"
             android:textColor="@color/white"
             android:textColorHighlight="#FEFEFE"
