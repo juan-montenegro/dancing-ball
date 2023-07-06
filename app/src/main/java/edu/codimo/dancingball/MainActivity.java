@@ -36,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onStartClick(View view) {
-        Intent intent = new Intent(this, MazeActivity.class);
+//    public void onStartClick(View view) {
+//        Intent intent = new Intent(this, MazeActivity.class);
+//        startActivity(intent);
+//    }
+
+    public void Openmaingame(View view) {
+        Intent intent = new Intent(this, Maingame.class);
         startActivity(intent);
     }
 }

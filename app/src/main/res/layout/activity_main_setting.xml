@@ -60,14 +60,15 @@
             android:layout_width="wrap_content"
             android:layout_height="154dp"
             android:layout_weight="1"
-            android:foreground="@drawable/button_blue_clip_art_button_png_d55597d0f8bbbc9393d4c8f17964e17b" />
+            android:foreground="@drawable/ball_blue" />
 
         <Button
             android:id="@+id/ButtonBallGreen"
             android:layout_width="wrap_content"
             android:layout_height="154dp"
             android:layout_weight="1"
-            android:foreground="@drawable/royalty_free_clip_art_glossy_orb_cliparts_c13937858ba34ef217efef845c2cb143" />
+            android:foreground="@drawable/ball_green"
+            android:onClick="colourballred" />
 
     </LinearLayout>
 

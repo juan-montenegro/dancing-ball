@@ -1,0 +1,18 @@
+Index: app/src/main/java/edu/codimo/dancingball/MainSetting.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/edu/codimo/dancingball/MainSetting.java b/app/src/main/java/edu/codimo/dancingball/MainSetting.java
+--- a/app/src/main/java/edu/codimo/dancingball/MainSetting.java	
++++ b/app/src/main/java/edu/codimo/dancingball/MainSetting.java	(date 1688620659127)
+@@ -17,7 +17,6 @@
+     }
+ 
+     public void backtomainsetting(View view) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_main);
++        finish();
+     }
+ }
+\ No newline at end of file
