@@ -1,6 +1,8 @@
 package edu.codimo.dancingball;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.hardware.SensorManager;
@@ -15,17 +17,22 @@ import android.view.Display;
 import android.hardware.SensorEventListener;
 import android.graphics.BitmapFactory;
 
+import edu.codimo.dancingball.storage.StorageHandler;
 
-public class Maingame extends AppCompatActivity implements SensorEventListener {
+
+public class MainGame extends AppCompatActivity implements SensorEventListener {
+    StorageHandler storageHandler;
     private float xPos, xAccel, xVel = 0.0f;
     private float yPos, yAccel, yVel = 0.0f;
     private float xMax, yMax;
     private Bitmap ball;
     private SensorManager sensorManager;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        storageHandler = new StorageHandler(this,getString(R.string.PREF_KEY));
         setContentView(R.layout.activity_maingame);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         BallView ballView = new BallView(this);
@@ -96,7 +103,7 @@ public class Maingame extends AppCompatActivity implements SensorEventListener {
 
         public BallView(Context context) {
             super(context);
-            Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball_red);
+            Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), getBallPref());
             final int dstWidth = 100;
             final int dstHeight = 100;
             ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
@@ -106,6 +113,17 @@ public class Maingame extends AppCompatActivity implements SensorEventListener {
         protected void onDraw(Canvas canvas) {
             canvas.drawBitmap(ball, xPos, yPos, null);
             invalidate();
+        }
+        public int getBallPref(){
+            String ballPref = storageHandler.getString(getString(R.string.ball_pref_key));
+            switch (ballPref) {
+                case "ball_blue":
+                    return R.drawable.ball_blue;
+                case "ball_green":
+                    return R.drawable.ball_green;
+                default:
+                    return R.drawable.ball_red;
+            }
         }
     }
 }
