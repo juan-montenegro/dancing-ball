@@ -42,11 +42,9 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black_overlay"
             android:text="Start"
-            android:textColor="@color/white"
             android:textColorHighlight="#FEFEFE"
             android:textColorLink="#FDFDFD"
-            app:icon="@android:drawable/ic_media_play"
-            app:iconTint="@color/white" />
+            app:icon="@android:drawable/ic_media_play" />
 
         <Button
             android:id="@+id/button4"
@@ -55,9 +53,7 @@
             android:backgroundTint="@color/black_overlay"
             android:onClick="opennsettingBtn"
             android:text="Setting"
-            android:textColor="@color/white"
             app:icon="@android:drawable/ic_menu_preferences"
-            app:iconTint="@color/white"
             app:strokeColor="#9C27B0" />
 
         <Button
@@ -67,9 +63,7 @@
             android:backgroundTint="@color/black_overlay"
             android:onClick="closeApplicationBtn"
             android:text="Exit"
-            android:textColor="@color/white"
-            app:icon="@android:drawable/ic_menu_revert"
-            app:iconTint="@color/white" />
+            app:icon="@android:drawable/ic_menu_revert" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
