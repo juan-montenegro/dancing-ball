@@ -3,4 +3,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_main">Dancing Ball</string>
+    <string name="btn_exit_text">Exit</string>
+    <string name="open_setting_btn_text">Setting</string>
+    <string name="btn_start_text">Start</string>
 </resources>

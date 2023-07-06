@@ -27,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
     public void closeApplicationBtn(View view) {
-        finishAffinity(); // Cierra todas las actividades abiertas en la aplicación
-        System.exit(0); // Finaliza el proceso de la aplicación
+        // Cierra todas las actividades abiertas en la aplicación
+        finishAffinity();
+        // Finaliza el proceso de la aplicación
+        System.exit(0);
     }
 
-    public void opennsettingBtn(View view) {
+    public void openSettingBtn(View view) {
         Intent intent = new Intent(this, MainSetting.class);
         startActivity(intent);
     }
