@@ -41,11 +41,20 @@
         android:textSize="30sp"
         android:textStyle="bold|italic" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="154dp"
+        android:layout_height="124dp"
         android:orientation="horizontal"
         android:visibility="visible">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/ButtonBallRed"
@@ -56,27 +65,46 @@
             android:onClick="onRedBallClick"
             app:icon="@drawable/ball_red" />
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/ButtonBallBlue"
             android:layout_width="wrap_content"
-            android:layout_height="154dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:foreground="@drawable/ball_blue"
             android:onClick="onBlueBallClick" />
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/ButtonBallGreen"
             android:layout_width="wrap_content"
-            android:layout_height="154dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:foreground="@drawable/ball_green"
             android:onClick="onGreenBallClick" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="26dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="47dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -92,9 +120,13 @@
         android:textSize="30sp"
         android:textStyle="bold|italic" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="143dp"
+        android:layout_height="113dp"
         android:orientation="horizontal">
 
         <Space
@@ -105,7 +137,7 @@
         <Button
             android:id="@+id/ManSens"
             android:layout_width="wrap_content"
-            android:layout_height="108dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#808080"
             android:backgroundTint="#808080"
@@ -134,7 +166,7 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:freezesText="false"
         android:text="@string/settings_back_btn"
         android:textAlignment="center"
