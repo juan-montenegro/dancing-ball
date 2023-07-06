@@ -10,19 +10,19 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="403dp"
-        android:layout_height="171dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:freezesText="false"
-        android:text="Dancing Ball"
+        android:text="@string/title_activity_main"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#F48121"
         android:textColorHint="#F44336"
         android:textIsSelectable="false"
-        android:textSize="60sp"
+        android:textSize="48sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="3dp" />
 
     <LinearLayout
         android:layout_width="153dp"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black_overlay"
-            android:text="Start"
+            android:text="@string/btn_start_text"
             android:textColor="@color/white"
             android:textColorHighlight="#FEFEFE"
             android:textColorLink="#FDFDFD"
@@ -53,8 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black_overlay"
-            android:onClick="opennsettingBtn"
-            android:text="Setting"
+            android:onClick="openSettingBtn"
+            android:text="@string/open_setting_btn_text"
             android:textColor="@color/white"
             app:icon="@android:drawable/ic_menu_preferences"
             app:iconTint="@color/white"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black_overlay"
             android:onClick="closeApplicationBtn"
-            android:text="Exit"
+            android:text="@string/btn_exit_text"
             android:textColor="@color/white"
             app:icon="@android:drawable/ic_menu_revert"
             app:iconTint="@color/white" />

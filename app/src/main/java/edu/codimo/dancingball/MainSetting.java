@@ -1,12 +1,9 @@
 package edu.codimo.dancingball;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 public class MainSetting extends AppCompatActivity {
 
@@ -16,7 +13,7 @@ public class MainSetting extends AppCompatActivity {
         setContentView(R.layout.activity_main_setting);
     }
 
-    public void backtomainsetting(View view) {
+    public void backToMainSetting(View view) {
         finish();
     }
 }

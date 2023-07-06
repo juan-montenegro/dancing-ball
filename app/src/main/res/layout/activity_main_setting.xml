@@ -18,13 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:freezesText="false"
-        android:text="Dancing Ball Setting"
+        android:text="@string/dancing_ball_setting_activity_title"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#F48121"
         android:textColorHint="#F44336"
         android:textIsSelectable="false"
-        android:textSize="45sp"
+        android:textSize="34sp"
         android:textStyle="bold|italic" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:freezesText="false"
-        android:text="choose the color of the ball"
+        android:text="@string/settings_color_of_the_ball"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#304FFE"
@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:freezesText="false"
-        android:text="choose control"
+        android:text="@string/settings_choose_control"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#304FFE"
@@ -133,7 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:freezesText="false"
-        android:text="Back"
+        android:text="@string/settings_back_btn"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#304FFE"
@@ -148,7 +148,7 @@
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
@@ -157,8 +157,7 @@
             android:layout_width="114dp"
             android:layout_height="match_parent"
             android:foreground="@drawable/pngfind_com_back_button_png_2641123"
-            android:onClick="backtomainsetting"
-            android:text="Button"
+            android:onClick="backToMainSetting"
             android:textAlignment="center" />
     </LinearLayout>
 

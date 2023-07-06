@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0); // Finaliza el proceso de la aplicación
     }
 
-    public void opennsettingBtn(View view) {
+    public void openSettingBtn(View view) {
         Intent intent = new Intent(this, MainSetting.class);
         startActivity(intent);
     }
