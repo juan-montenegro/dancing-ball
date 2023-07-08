@@ -17,4 +17,7 @@
     <string name="button_stop">Stop</string>
     <string name="ball_pref_key">ball_pref_key</string>
     <string name="PREF_KEY">edu.codimo.DancingBall.KEYS</string>
+    <string name="ball_red_btn_text">Red Ball</string>
+    <string name="ball_green_btn_text">Green Ball</string>
+    <string name="ball_blue_btn_text">Blue Ball</string>
 </resources>
