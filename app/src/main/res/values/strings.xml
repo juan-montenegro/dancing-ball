@@ -20,4 +20,5 @@
     <string name="ball_red_btn_text">Red Ball</string>
     <string name="ball_green_btn_text">Green Ball</string>
     <string name="ball_blue_btn_text">Blue Ball</string>
+    <string name="settings_next_btn">Play</string>
 </resources>
