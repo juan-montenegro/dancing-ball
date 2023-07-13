@@ -141,7 +141,6 @@
             android:id="@+id/button"
             android:layout_width="114dp"
             android:layout_height="match_parent"
-            android:background="@color/black_overlay"
             android:backgroundTint="?attr/colorOnBackground"
             android:foreground="@drawable/back_logo"
             android:onClick="backToMainSetting"
