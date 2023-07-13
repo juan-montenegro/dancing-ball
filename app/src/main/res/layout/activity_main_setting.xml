@@ -117,7 +117,7 @@
 
         <TextView
             android:id="@+id/textView_chose_bn2"
-            android:layout_width="84dp"
+            android:layout_width="51dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:freezesText="false"
@@ -151,7 +151,7 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
     </LinearLayout>
