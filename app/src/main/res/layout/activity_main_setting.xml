@@ -199,7 +199,7 @@
             android:backgroundTint="?attr/colorOnBackground"
             android:contentDescription="@string/settings_next_btn"
             android:foreground="@drawable/next_logo"
-            android:onClick="nexttogame"
+            android:onClick="goToGame"
             android:shadowColor="?attr/colorOnBackground"
             android:textAlignment="center"
             android:textColorHighlight="?attr/colorOnBackground"

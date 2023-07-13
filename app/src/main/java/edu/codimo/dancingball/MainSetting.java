@@ -33,7 +33,7 @@ public class MainSetting extends AppCompatActivity {
         finish();
     }
 
-    public void nexttogame(View view) {
+    public void goToGame(View view) {
         Intent intent = new Intent(this, MainGame.class);
         startActivity(intent);
     }
