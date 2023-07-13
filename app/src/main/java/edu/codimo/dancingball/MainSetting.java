@@ -3,6 +3,7 @@ package edu.codimo.dancingball;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,11 @@ public class MainSetting extends AppCompatActivity {
 
     public void backToMainSetting(View view) {
         finish();
+    }
+
+    public void nexttogame(View view) {
+        Intent intent = new Intent(this, MainGame.class);
+        startActivity(intent);
     }
 
     public void onGreenBallClick(View view) {

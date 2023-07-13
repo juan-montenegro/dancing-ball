@@ -15,7 +15,7 @@
         android:layout_height="45dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView_namedb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:freezesText="false"
@@ -106,7 +106,7 @@
         android:layout_height="66dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView_chose_bn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:freezesText="false"
@@ -134,12 +134,32 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_back"
             android:layout_width="114dp"
             android:layout_height="match_parent"
             android:backgroundTint="?attr/colorOnBackground"
             android:foreground="@drawable/back_logo"
             android:onClick="backToMainSetting"
+            android:shadowColor="?attr/colorOnBackground"
+            android:textAlignment="center"
+            android:textColorHighlight="?attr/colorOnBackground"
+            android:textColorLink="?attr/colorOnBackground"
+            app:iconTint="?attr/colorOnBackground"
+            app:rippleColor="?attr/colorOnBackground"
+            app:strokeColor="?attr/colorOnBackground" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="114dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="?attr/colorOnBackground"
+            android:foreground="@drawable/next_logo"
+            android:onClick="nexttogame"
             android:shadowColor="?attr/colorOnBackground"
             android:textAlignment="center"
             android:textColorHighlight="?attr/colorOnBackground"
