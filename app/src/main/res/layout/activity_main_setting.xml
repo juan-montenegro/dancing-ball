@@ -54,7 +54,7 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <Button
@@ -68,7 +68,7 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <Button
@@ -82,7 +82,7 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <Button
@@ -96,7 +96,7 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
     </LinearLayout>
@@ -167,7 +167,7 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <Button
@@ -175,6 +175,7 @@
             android:layout_width="114dp"
             android:layout_height="match_parent"
             android:backgroundTint="?attr/colorOnBackground"
+            android:contentDescription="@string/settings_back_btn"
             android:foreground="@drawable/back_logo"
             android:onClick="backToMainSetting"
             android:shadowColor="?attr/colorOnBackground"
@@ -183,11 +184,12 @@
             android:textColorLink="?attr/colorOnBackground"
             app:iconTint="?attr/colorOnBackground"
             app:rippleColor="?attr/colorOnBackground"
-            app:strokeColor="?attr/colorOnBackground" />
+            app:strokeColor="?attr/colorOnBackground"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <Button
@@ -195,6 +197,7 @@
             android:layout_width="114dp"
             android:layout_height="match_parent"
             android:backgroundTint="?attr/colorOnBackground"
+            android:contentDescription="@string/settings_next_btn"
             android:foreground="@drawable/next_logo"
             android:onClick="nexttogame"
             android:shadowColor="?attr/colorOnBackground"
@@ -203,16 +206,17 @@
             android:textColorLink="?attr/colorOnBackground"
             app:iconTint="?attr/colorOnBackground"
             app:rippleColor="?attr/colorOnBackground"
-            app:strokeColor="?attr/colorOnBackground" />
+            app:strokeColor="?attr/colorOnBackground"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
     </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="207dp" />
 
 </LinearLayout>
