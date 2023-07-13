@@ -26,8 +26,8 @@ public class StorageHandler {
         editor.apply();
     }
 
-    public int getInt(String key){
-        return sharedPref.getInt(key,0);
+    public int getInt(String key, int defValue){
+        return sharedPref.getInt(key,defValue);
     }
     public String getString(String key){
         return sharedPref.getString(key,"");

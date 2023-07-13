@@ -1,8 +1,10 @@
 package edu.codimo.dancingball;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.hardware.SensorManager;
@@ -16,32 +18,41 @@ import android.graphics.Point;
 import android.view.Display;
 import android.hardware.SensorEventListener;
 import android.graphics.BitmapFactory;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.graphics.Paint;
 import android.graphics.Color;
 
 
+import edu.codimo.dancingball.game.MazeView;
 import edu.codimo.dancingball.storage.StorageHandler;
 
 
 public class MainGame extends AppCompatActivity implements SensorEventListener {
-    StorageHandler storageHandler; // Manejador de almacenamiento para el juego
-    private float xPos, xAccel, xVel = 0.0f; // Posición, aceleración y velocidad en el eje X
-    private float yPos, yAccel, yVel = 0.0f; // Posición, aceleración y velocidad en el eje Y
-    private float xMax, yMax; // Límites máximos en los ejes X e Y
-    private Bitmap ball; // Imagen de la pelota
-    private SensorManager sensorManager; // Manejador de sensores para capturar los datos del acelerómetro
+    private static final String[] options = { "5x5 ", "8x8", "10x10"};
+    private StorageHandler storageHandler;
+    private float xPos, xAccel, xVel = 0.0f;
+    private float yPos, yAccel, yVel = 0.0f;
+    private float xMax, yMax;
+    private Bitmap ball;
+    private SensorManager sensorManager;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        storageHandler = new StorageHandler(this,getString(R.string.PREF_KEY));
+        setContentView(R.layout.activity_main_game);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        viewGroup = findViewById(R.id.MazeView);
+//        viewGroup.addView(new BallView(this));
+//        setContentView(ballView);
 
-        storageHandler = new StorageHandler(this,getString(R.string.PREF_KEY)); // Inicializa el manejador de almacenamiento con el contexto actual y una clave de preferencia
-        setContentView(R.layout.activity_maingame); // Establece el diseño de la actividad principal
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Establece la orientación de la pantalla en modo retrato
-
-        BallView ballView = new BallView(this); // Crea una instancia de la vista de la pelota
-        setContentView(ballView); // Establece la vista de la pelota como contenido de la actividad
+//        BallView ballView = new BallView(this); // Crea una instancia de la vista de la pelota
+//        setContentView(ballView); // Establece la vista de la pelota como contenido de la actividad
 
         Point size = new Point();
         Display display = getWindowManager().getDefaultDisplay();
@@ -76,7 +87,6 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
         }
     }
 
-
     private void updateBall() {
         float frameTime = 0.666f;
         xVel += (xAccel * frameTime); // Actualizar la velocidad en el eje X según la aceleración
@@ -107,6 +117,51 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         // Este método se llama cuando la precisión del sensor cambia.
+    }
+
+    public void onStartGameBtnClick(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select maze size:");
+        int cols = storageHandler.getInt(
+                getResources().getString(R.string.cols_pref_key),5);
+        int rows = storageHandler.getInt(
+                getResources().getString(R.string.rows_pref_key),5);
+        final Spinner spinner = new Spinner(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, options);
+        spinner.setLayoutParams(params);
+        spinner.setAdapter(adapter);
+
+        builder.setView(spinner);
+
+        spinner.setSelection(adapter.getPosition(cols + "x" + rows));
+        builder.setPositiveButton(getString(R.string.start_game_btn_text), (dialog, id) -> {
+            int selectedCols, selectedRows;
+            // START THE GAME!
+            String spinnerChoice = spinner.getSelectedItem().toString();
+            String[] choice = spinnerChoice.trim().split("x");
+            selectedCols = Integer.parseInt(choice[0]);
+            selectedRows = Integer.parseInt(choice[1]);
+            storageHandler.writePref(getString(R.string.rows_pref_key), selectedCols);
+            storageHandler.writePref(getString(R.string.cols_pref_key), selectedRows);
+            recreate();
+            MazeView mazeView = findViewById(R.id.MazeView);
+            mazeView.maze.setMazeSize(cols,rows);
+            mazeView.maze.init();
+            mazeView.maze.generateMaze();
+            mazeView.invalidate();
+        });
+        builder.setNegativeButton(getString(R.string.cancel_dialog_text), (dialog, id) -> {
+            // User cancelled the dialog
+            finish();
+        });
+        builder.show();
+    }
+
+
+    public void onStopGameClickBtn(View view) {
+        super.finish();
     }
 
     private class BallView extends View {
@@ -161,7 +216,6 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
             // Redibujar la vista
             invalidate();
         }
-
 
         public int getBallPref(){
             String ballPref = storageHandler.getString(getString(R.string.ball_pref_key));

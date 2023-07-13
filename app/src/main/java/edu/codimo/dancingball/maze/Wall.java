@@ -2,7 +2,7 @@ package edu.codimo.dancingball.maze;
 
 public class Wall {
     private boolean hasWall;
-    Wall(){
+    public Wall(){
         this.hasWall = true;
     }
 

@@ -5,18 +5,19 @@ public class Cell {
     private final Wall east;
     private final Wall south;
     private final Wall west;
-    private boolean visited;
+    private boolean visited = false;
     private final int[] position;
-    Cell(){
-        this.north = new Wall();
-        this.east = new Wall();
-        this.south = new Wall();
-        this.west = new Wall();
-        this.visited = false;
-        this.position = new int[2];
+
+    public Cell(){
+        north = new Wall();
+        east = new Wall();
+        south = new Wall();
+        west = new Wall();
+        position = new int[2];
     }
+
     public void setVisited(boolean state){
-        this.visited = state;
+        visited = state;
     }
 
     public void setNorth(boolean north) {
@@ -60,7 +61,8 @@ public class Cell {
     }
 
     public void setPosition(int x, int y) {
-        this.position[0] = x;
-        this.position[1] = y;
+        position[0] = x;
+        position[1] = y;
     }
+
 }
