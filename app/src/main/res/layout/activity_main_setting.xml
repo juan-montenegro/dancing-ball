@@ -103,11 +103,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="26dp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="66dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -141,7 +137,6 @@
             android:id="@+id/button"
             android:layout_width="114dp"
             android:layout_height="match_parent"
-            android:background="@color/black_overlay"
             android:backgroundTint="?attr/colorOnBackground"
             android:foreground="@drawable/back_logo"
             android:onClick="backToMainSetting"
