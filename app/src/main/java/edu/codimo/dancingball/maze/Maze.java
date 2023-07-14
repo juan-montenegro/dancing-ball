@@ -35,6 +35,8 @@ public class Maze {
         Stack<Cell> stack = new Stack<>();
         Cell current, next;
         current = maze[0][0];
+        current.setStart(true);
+        current.setHasPlayer(true);
         current.setVisited(true);
         Log.d("generateMaze", "Generating maze....");
         while (true) {
@@ -44,11 +46,11 @@ public class Maze {
                 stack.push(current);
                 current = next;
                 current.setVisited(true);
-
             } else {
                 current = stack.pop();
             }
             if (stack.empty()) {
+                current.setEnd(true);
                 Log.d("generateMaze", "Maze Generated");
                 break;
             }
@@ -89,28 +91,28 @@ public class Maze {
         if (row > 0){
             Log.d("TOP_CELL", "Cell topCell = maze["+col+"]["+ (row - 1) +"] ");
             Cell topCell = maze[col][row - 1];
-            if(topCell.visited()){
+            if(topCell.setVisited()){
                 cells.add(topCell);
             }
         }
         if (row < j - 1){
             Log.d("BOTTOM_CELL", "Cell bottomCell = maze["+col+"]["+ (row + 1) +"] ");
             Cell bottomCell = maze[col][row + 1];
-            if(bottomCell.visited()){
+            if(bottomCell.setVisited()){
                 cells.add(bottomCell);
             }
         }
         if (col > 0){
             Log.d("LEFT_CELL", "Cell leftCell = maze["+(col-1)+"]["+ (row) +"] ");
             Cell leftCell = maze[col - 1][row];
-            if(leftCell.visited()){
+            if(leftCell.setVisited()){
                 cells.add(leftCell);
             }
         }
         if (col < i - 1){
             Log.d("RIGHT_CELL", "Cell rightCell = maze["+(col+1)+"]["+ (row) +"] ");
             Cell rightCell = maze[col + 1][row];
-            if(rightCell.visited()){
+            if(rightCell.setVisited()){
                 cells.add(rightCell);
             }
         }
