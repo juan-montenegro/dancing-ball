@@ -128,6 +128,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             statusListening();
         });
         builder.setNegativeButton(getString(R.string.cancel_dialog_text), (dialog, id) -> {
+            MazeView mazeView = findViewById(R.id.MazeView);
+            mazeView.setBallToStart();
+            mazeView.invalidate();
             dialog.dismiss();
             // User cancelled the dialog
             });
