@@ -1,6 +1,8 @@
 package edu.codimo.dancingball.game;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,17 +15,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.codimo.dancingball.R;
+import edu.codimo.dancingball.maze.Ball;
 import edu.codimo.dancingball.maze.Cell;
 import edu.codimo.dancingball.maze.Maze;
 import edu.codimo.dancingball.maze.Wall;
 import edu.codimo.dancingball.storage.StorageHandler;
 
 public class MazeView extends View {
-    private Maze maze;
+    public final Maze maze;
+    private final Bitmap ballBitMap;
+    public final Ball ball;
     private final  StorageHandler storageHandler;
     private int MAZE_COLS;
     private int MAZE_ROWS;
-    private float wallThickness;
     private final Paint wallPainter;
 
     private float topMargin;
@@ -31,21 +35,32 @@ public class MazeView extends View {
 
     public MazeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        storageHandler = new StorageHandler(context, getResources().getString(R.string.PREF_KEY));
-        getMazeSize();
         Point size = new Point();
         Display display = ((AppCompatActivity) getContext())
                 .getWindowManager()
                 .getDefaultDisplay();
         display.getSize(size);
+        storageHandler = new StorageHandler(context, getResources().getString(R.string.PREF_KEY));
+        getMazeSize();
+        // Calcula el límite máximo en el eje X restando 100
+        ball = new Ball(size.x - 100, size.y - 100);
+        String ballPref = storageHandler.getString(getResources().getString(R.string.ball_pref_key));
+        Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), ball.getBallPrefId(ballPref));
+
         int width = size.x;
-        wallThickness = (float) (width * 0.005);
+        float wallThickness = (float) (width * 0.005);
         maze = new Maze(MAZE_COLS, MAZE_ROWS);
+
         wallPainter = new Paint();
         wallPainter.setColor(Color.BLACK);
         wallPainter.setStrokeWidth(wallThickness);
-//        maze.setMazeSize(MAZE_COLS,MAZE_ROWS);
-//        maze.init();
+
+        final int dstWidth = (int) maze.getCellSize();
+        final int dstHeight = (int) maze.getCellSize();
+        ballBitMap = Bitmap.createScaledBitmap(ballSrc,
+                dstWidth + ((int) wallThickness * 10),
+                dstHeight + ((int) wallThickness * 10),
+                true);
     }
 
     private void getMazeSize() {
@@ -55,7 +70,11 @@ public class MazeView extends View {
                 getResources().getString(R.string.cols_pref_key),5);
     }
 
-
+    public void refreshMaze(){
+        getMazeSize();
+        maze.refreshMaze(MAZE_COLS, MAZE_ROWS);
+        maze.init();
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -63,9 +82,6 @@ public class MazeView extends View {
 
         int width = getWidth();
         int height = getHeight();
-        getMazeSize();
-        maze.refreshMaze(MAZE_COLS, MAZE_ROWS);
-        maze.init();
 
         int ratio = width / height;
         if (ratio < (MAZE_COLS / MAZE_ROWS)){
@@ -77,6 +93,9 @@ public class MazeView extends View {
         topMargin   = (height - MAZE_ROWS * maze.getCellSize())/2;
         canvas.translate(leftMargin, topMargin);
         drawMaze(canvas);
+        // Dibujar la imagen de la bola en las coordenadas xPos y yPos en el canvas
+        canvas.drawBitmap(ballBitMap, ball.getXPos(), ball.getYPos(), null);
+        invalidate();
     }
     private void drawMaze(Canvas canvas){
         for (int x = 0; x < MAZE_COLS; x++){

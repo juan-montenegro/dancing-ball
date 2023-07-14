@@ -8,12 +8,19 @@ public class Cell {
     private boolean visited;
     private final int[] position;
 
+    private boolean hasPlayer;
+    private boolean isStart;
+    private boolean isEnd;
+
     public Cell(){
         north = new Wall();
         east = new Wall();
         south = new Wall();
         west = new Wall();
         visited = false;
+        hasPlayer = false;
+        isStart = false;
+        isEnd = false;
         position = new int[2];
     }
 
@@ -53,7 +60,7 @@ public class Cell {
         return west;
     }
 
-    public boolean visited() {
+    public boolean setVisited() {
         return !this.visited;
     }
 
@@ -66,4 +73,27 @@ public class Cell {
         position[1] = y;
     }
 
+    public boolean isHasPlayer() {
+        return hasPlayer;
+    }
+
+    public void setHasPlayer(boolean hasPlayer) {
+        this.hasPlayer = hasPlayer;
+    }
+
+    public boolean isStart() {
+        return isStart;
+    }
+
+    public void setStart(boolean start) {
+        isStart = start;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
+    }
+
+    public void setEnd(boolean end) {
+        isEnd = end;
+    }
 }
