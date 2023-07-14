@@ -5,24 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.graphics.Bitmap;
 import android.hardware.SensorManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.view.View;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.content.pm.ActivityInfo;
-import android.graphics.Point;
-import android.view.Display;
 import android.hardware.SensorEventListener;
-import android.graphics.BitmapFactory;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.graphics.Paint;
-import android.graphics.Color;
+
 
 
 import edu.codimo.dancingball.game.MazeView;
@@ -32,8 +26,6 @@ import edu.codimo.dancingball.storage.StorageHandler;
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
     private static final String[] options = { "5x5 ", "8x8", "10x10", "5x10", "8x15", "10x20"};
     private StorageHandler storageHandler;
-    private float xPos, xAccel, xVel = 0.0f;
-    private float yPos, yAccel, yVel = 0.0f;
     private MazeView mazeView;
 
     private SensorManager sensorManager;
@@ -47,15 +39,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         storageHandler = new StorageHandler(this,getString(R.string.PREF_KEY));
         setContentView(R.layout.activity_main_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-//        BallView ballView = new BallView(this); // Crea una instancia de la vista de la pelota
-//        setContentView(ballView); // Establece la vista de la pelota como contenido de la actividad
-//
-//        Point size = new Point();
-//        Display display = getWindowManager().getDefaultDisplay();
-//        display.getSize(size);
-//        xMax = (float) size.x - 100; // Calcula el límite máximo en el eje X restando 100
-//        yMax = (float) size.y - 100; // Calcula el límite máximo en el eje Y restando 100
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // Obtiene el manejador de sensores del sistema
         stopButton = findViewById(R.id.StopGameBtn);
@@ -76,61 +59,33 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onStart() {
         super.onStart();
-        // Registra el listener del acelerómetro con el sensor manager, estableciendo una demora específica
         statusListening();
     }
 
     private void statusListening() {
         if (startButton.isEnabled()){
+            // Desregistra el listener del acelerómetro del sensor manager
             sensorManager.unregisterListener(this);
         } else {
+            // Registra el listener del acelerómetro con el sensor manager, estableciendo una demora específica
             sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
         }
     }
 
     @Override
     protected void onStop() {
-        // Desregistra el listener del acelerómetro del sensor manager
         statusListening();
         super.onStop();
     }
 
-
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            xAccel = sensorEvent.values[0]; // Asigna el valor de aceleración en el eje X
-            yAccel = -sensorEvent.values[1]; // Asigna el valor de aceleración en el eje Y con una inversión
+            float xAccel = sensorEvent.values[0]; // Asigna el valor de aceleración en el eje X
+            float yAccel = -sensorEvent.values[1]; // Asigna el valor de aceleración en el eje Y con una inversión
             mazeView.ball.updateBall(xAccel, yAccel);// Llama al método para actualizar la posición de la pelota
         }
     }
-//
-//    private void updateBall(float xAccel, float yAccel) {
-//        float frameTime = 0.666f;
-//        xVel += (xAccel * frameTime); // Actualizar la velocidad en el eje X según la aceleración
-//        yVel += (yAccel * frameTime); // Actualizar la velocidad en el eje Y según la aceleración
-//
-//        float xS = (xVel / 2) * frameTime; // Calcular el desplazamiento en el eje X
-//        float yS = (yVel / 2) * frameTime; // Calcular el desplazamiento en el eje Y
-//
-//        float newXPos = xPos - xS; // Calcular la nueva posición en el eje X
-//        float newYPos = yPos - yS; // Calcular la nueva posición en el eje Y
-//
-//        // Rebotar en los bordes del eje X
-//        if (newXPos > xMax || newXPos < 0) {
-//            xVel = -xVel * 0.4f; // Invertir y reducir la velocidad en el eje X (factor de amortiguamiento: 0.8f)
-//        }
-//
-//        // Rebotar en los bordes del eje Y
-//        if (newYPos > yMax || newYPos < 0) {
-//            yVel = -yVel * 0.4f; // Invertir y reducir la velocidad en el eje Y (factor de amortiguamiento: 0.8f)
-//        }
-//
-//        xPos = xPos - xVel * frameTime; // Actualizar la posición en el eje X considerando la velocidad
-//        yPos = yPos - yVel * frameTime; // Actualizar la posición en el eje Y considerando la velocidad
-//    }
-
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
