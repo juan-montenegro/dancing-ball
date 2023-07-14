@@ -64,6 +64,7 @@ public class MazeView extends View {
         int width = getWidth();
         int height = getHeight();
         getMazeSize();
+        maze.refreshMaze(MAZE_COLS, MAZE_ROWS);
         maze.init();
 
         int ratio = width / height;

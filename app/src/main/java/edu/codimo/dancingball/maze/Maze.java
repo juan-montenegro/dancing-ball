@@ -132,10 +132,11 @@ public class Maze {
     public Cell[][] getMaze() {
         return maze;
     }
-    public void setMazeSize(int i, int j){
+    public void refreshMaze(int i, int j){
         this.i = i;
         this.j = j;
     }
+
     @NonNull
     public String toString(){
         StringBuilder string = new StringBuilder();
