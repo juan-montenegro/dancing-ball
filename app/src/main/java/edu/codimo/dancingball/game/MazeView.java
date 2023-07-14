@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 
@@ -22,45 +24,47 @@ import edu.codimo.dancingball.maze.Wall;
 import edu.codimo.dancingball.storage.StorageHandler;
 
 public class MazeView extends View {
-    public final Maze maze;
+    private final Maze maze;
     private final Bitmap ballBitMap;
-    public final Ball ball;
+    private final Ball ball;
     private final  StorageHandler storageHandler;
     private int MAZE_COLS;
     private int MAZE_ROWS;
     private final Paint wallPainter;
 
-    private float topMargin;
-    private float leftMargin;
+    private final float wallThickness;
+    private final Rect rectBall;
+    private final Point size;
 
     public MazeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Point size = new Point();
+        storageHandler = new StorageHandler(context, getResources().getString(R.string.PREF_KEY));
+        getMazeSize();
+
+        String ballPref = storageHandler.getString(getResources().getString(R.string.ball_pref_key));
         Display display = ((AppCompatActivity) getContext())
                 .getWindowManager()
                 .getDefaultDisplay();
+        size = new Point();
         display.getSize(size);
-        storageHandler = new StorageHandler(context, getResources().getString(R.string.PREF_KEY));
-        getMazeSize();
+        Log.d("SIZE","SIZE(X = " + size.x + ", Y = " + size.y + ")");
         // Calcula el límite máximo en el eje X restando 100
         ball = new Ball(size.x - 100, size.y - 100);
-        String ballPref = storageHandler.getString(getResources().getString(R.string.ball_pref_key));
-        Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), ball.getBallPrefId(ballPref));
-
         int width = size.x;
-        float wallThickness = (float) (width * 0.005);
+        wallThickness = (float) (width * 0.005);
         maze = new Maze(MAZE_COLS, MAZE_ROWS);
 
         wallPainter = new Paint();
         wallPainter.setColor(Color.BLACK);
         wallPainter.setStrokeWidth(wallThickness);
 
-        final int dstWidth = (int) maze.getCellSize();
-        final int dstHeight = (int) maze.getCellSize();
-        ballBitMap = Bitmap.createScaledBitmap(ballSrc,
-                dstWidth + ((int) wallThickness * 20),
-                dstHeight + ((int) wallThickness * 20),
-                true);
+        final int dstWidth = (int) maze.getCellSize() + ((int) wallThickness * 15);
+        final int dstHeight = (int) maze.getCellSize() + ((int) wallThickness * 15);
+
+        Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), ball.getBallPrefId(ballPref));
+        ballBitMap = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
+
+        rectBall = new Rect();
     }
 
     private void getMazeSize() {
@@ -92,12 +96,19 @@ public class MazeView extends View {
         } else {
             maze.setCellSize(height / ((float) MAZE_ROWS + 1));
         }
-        leftMargin  = (width - MAZE_COLS * maze.getCellSize())/2;
-        topMargin   = (height - MAZE_ROWS * maze.getCellSize())/2;
+        float leftMargin = (width - MAZE_COLS * maze.getCellSize()) / 2;
+        float topMargin = (height - MAZE_ROWS * maze.getCellSize()) / 2;
         canvas.translate(leftMargin, topMargin);
         drawMaze(canvas);
         // Dibujar la imagen de la bola en las coordenadas xPos y yPos en el canvas
-        canvas.drawBitmap(ballBitMap, ball.getXPos(), ball.getYPos(), null);
+        canvas.drawBitmap(ballBitMap, ball.getXPos() + 10, ball.getYPos() + 10, null);
+        rectBall.set(
+                (int) ball.getXPos(),
+                (int) ball.getYPos(),
+                  (int) ball.getXPos() + ballBitMap.getWidth(),
+                (int) ball.getYPos() + ballBitMap.getHeight()
+        );
+        ball.setBounds(rectBall);
         invalidate();
     }
     private void drawMaze(Canvas canvas){
@@ -114,15 +125,69 @@ public class MazeView extends View {
 
 
     private void drawWall(Canvas canvas, Wall wall, int xInit, int yInit, int xFinal,  int yFinal) {
+
         if(wall.hasWall()){
-            canvas.drawLine(
-                    xInit   * maze.getCellSize(),
-                    yInit   * maze.getCellSize(),
-                    xFinal  * maze.getCellSize(),
-                    yFinal  * maze.getCellSize(),
-                    wallPainter
+//            canvas.drawLine(
+//                    xInit   * maze.getCellSize(),
+//                    yInit   * maze.getCellSize(),
+//                    xFinal  * maze.getCellSize(),
+//                    yFinal  * maze.getCellSize(),
+//                    wallPainter
+//            );
+            Rect rectWall = new Rect(
+                    (xInit      * (int) maze.getCellSize()) + ((int) wallThickness + 1),
+                    (yInit      * (int) maze.getCellSize()) + ((int) wallThickness + 1),
+                    xFinal     * (int) maze.getCellSize()  + ((int) wallThickness - 1),
+                    yFinal   * (int) maze.getCellSize()  + ((int) wallThickness - 1)
             );
+            wall.setBounds(rectWall);
+            canvas.drawRect(rectWall,wallPainter);
+
+
+            if (Rect.intersects(rectWall,rectBall)) {
+                // Rectangles collide
+                // Handle collision logic here
+
+                // HANDLE VERTICAL COLLISION
+                if ((rectBall.left >= rectWall.left) && (rectBall.left <= rectWall.right)){
+                    ball.setMaxSize(
+                            maze.getCellSize() * (rectBall.exactCenterX() + rectWall.right),
+                            size.y - 100
+                    );
+//                    ball.setMinSize(
+//                            maze.getCellSize() + rectBall.exactCenterX(),
+//                            0
+//                    );
+                } else if ((rectBall.right >= rectWall.right) && (rectBall.right <= rectWall.left)){
+                    ball.setMaxSize(
+                            maze.getCellSize() * (rectBall.exactCenterX() + rectWall.left),
+                            size.y - 100
+                    );
+                }
+                // HANDLE HORIZONTAL COLLISION
+                else if ((rectBall.top >= rectWall.top) && (rectBall.top <= rectWall.bottom)){
+                    ball.setMaxSize(
+                            size.x - 100,
+                            maze.getCellSize() * (rectBall.exactCenterY() + rectWall.bottom)
+                    );
+                } else if ((rectBall.bottom >= rectWall.bottom) && (rectBall.bottom <= rectWall.top)){
+                    ball.setMaxSize(
+                            size.x - 100,
+                            maze.getCellSize() * (rectBall.exactCenterY() + rectWall.top)
+                    );
+                }
+                else {
+                    ball.setMaxSize(size.x - 100, size.y - 100);
+                    ball.setMinSize(0,0);
+                }
+            }
         }
     }
 
+    public void updateBall(float xAccel, float yAccel) {
+        ball.updateBall(xAccel, yAccel);
+    }
+    public void setBallToStart(){
+        ball.setPos(0,0);
+    }
 }

@@ -62,6 +62,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         statusListening();
     }
 
+    @Override
+    protected void onStop() {
+        statusListening();
+        super.onStop();
+    }
+
+
     private void statusListening() {
         if (startButton.isEnabled()){
             // Desregistra el listener del acelerómetro del sensor manager
@@ -73,17 +80,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    protected void onStop() {
-        statusListening();
-        super.onStop();
-    }
-
-    @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float xAccel = sensorEvent.values[0]; // Asigna el valor de aceleración en el eje X
             float yAccel = -sensorEvent.values[1]; // Asigna el valor de aceleración en el eje Y con una inversión
-            mazeView.ball.updateBall(xAccel, yAccel);// Llama al método para actualizar la posición de la pelota
+            mazeView.updateBall(xAccel, yAccel);// Llama al método para actualizar la posición de la pelota
         }
     }
 
@@ -127,6 +128,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             statusListening();
         });
         builder.setNegativeButton(getString(R.string.cancel_dialog_text), (dialog, id) -> {
+            MazeView mazeView = findViewById(R.id.MazeView);
+            mazeView.setBallToStart();
+            mazeView.invalidate();
             dialog.dismiss();
             // User cancelled the dialog
             });
