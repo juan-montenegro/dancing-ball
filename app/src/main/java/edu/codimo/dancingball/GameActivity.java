@@ -30,7 +30,7 @@ import edu.codimo.dancingball.storage.StorageHandler;
 
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
-    private static final String[] options = { "5x5 ", "8x8", "10x10"};
+    private static final String[] options = { "5x5 ", "8x8", "10x10", "5x10", "8x15", "10x20"};
     private StorageHandler storageHandler;
     private float xPos, xAccel, xVel = 0.0f;
     private float yPos, yAccel, yVel = 0.0f;
