@@ -95,7 +95,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         super.onStop();
     }
 
-
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
