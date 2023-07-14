@@ -58,8 +58,8 @@ public class MazeView extends View {
         final int dstWidth = (int) maze.getCellSize();
         final int dstHeight = (int) maze.getCellSize();
         ballBitMap = Bitmap.createScaledBitmap(ballSrc,
-                dstWidth + ((int) wallThickness * 10),
-                dstHeight + ((int) wallThickness * 10),
+                dstWidth + ((int) wallThickness * 20),
+                dstHeight + ((int) wallThickness * 20),
                 true);
     }
 
@@ -75,6 +75,7 @@ public class MazeView extends View {
         maze.refreshMaze(MAZE_COLS, MAZE_ROWS);
         maze.init();
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -82,6 +83,8 @@ public class MazeView extends View {
 
         int width = getWidth();
         int height = getHeight();
+
+        ball.setMaxSize(width,height);
 
         int ratio = width / height;
         if (ratio < (MAZE_COLS / MAZE_ROWS)){
