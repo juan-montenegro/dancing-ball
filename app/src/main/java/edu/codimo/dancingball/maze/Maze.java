@@ -1,17 +1,12 @@
 package edu.codimo.dancingball.maze;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
-
-import edu.codimo.dancingball.R;
-import edu.codimo.dancingball.game.MazeView;
 
 public class Maze {
     private Cell[][] maze;
@@ -33,17 +28,16 @@ public class Maze {
                 maze[x][y].setPosition(x,y);
             }
         }
+        generateMaze();
     }
 
     public void generateMaze(){
-        init();
         Stack<Cell> stack = new Stack<>();
         Cell current, next;
         current = maze[0][0];
         current.setVisited(true);
         Log.d("generateMaze", "Generating maze....");
         while (true) {
-            Log.d("generateMaze", "Generating maze....");
             next = getNextCell(current);
             if (next != null) {
                 removeWall(current, next);
@@ -63,20 +57,25 @@ public class Maze {
 
     private void removeWall(Cell current, Cell next) {
         int[] currentIndexes = current.getPosition();
-        int[] nextIndexes = current.getPosition();
+        int[] nextIndexes = next.getPosition();
+        Log.d("REMOVING WALLS", "REMOVING WALLS....");
         if (currentIndexes[0] == nextIndexes[0] && currentIndexes[1] == nextIndexes[1] + 1){
+            Log.d("REMOVING WALLS", "Removing NORTH wall");
             current.setNorth(false);
             next.setSouth(false);
         }
         if (currentIndexes[0] == nextIndexes[0] && currentIndexes[1] == nextIndexes[1] - 1){
+            Log.d("REMOVING WALLS", "Removing SOUTH wall");
             current.setSouth(false);
             next.setNorth(false);
         }
         if (currentIndexes[0] == nextIndexes[0] + 1 && currentIndexes[1] == nextIndexes[1]){
+            Log.d("REMOVING WALLS", "Removing WEST wall");
             current.setWest(false);
             next.setEast(false);
         }
         if (currentIndexes[0] == nextIndexes[0] - 1 && currentIndexes[1] == nextIndexes[1]){
+            Log.d("REMOVING WALLS", "Removing EAST wall");
             current.setEast(false);
             next.setWest(false);
         }
@@ -90,28 +89,28 @@ public class Maze {
         if (row > 0){
             Log.d("TOP_CELL", "Cell topCell = maze["+col+"]["+ (row - 1) +"] ");
             Cell topCell = maze[col][row - 1];
-            if(!topCell.isVisited()){
+            if(topCell.visited()){
                 cells.add(topCell);
             }
         }
         if (row < j - 1){
             Log.d("BOTTOM_CELL", "Cell bottomCell = maze["+col+"]["+ (row + 1) +"] ");
             Cell bottomCell = maze[col][row + 1];
-            if(!bottomCell.isVisited()){
+            if(bottomCell.visited()){
                 cells.add(bottomCell);
             }
         }
         if (col > 0){
             Log.d("LEFT_CELL", "Cell leftCell = maze["+(col-1)+"]["+ (row) +"] ");
             Cell leftCell = maze[col - 1][row];
-            if(!leftCell.isVisited()){
+            if(leftCell.visited()){
                 cells.add(leftCell);
             }
         }
         if (col < i - 1){
             Log.d("RIGHT_CELL", "Cell rightCell = maze["+(col+1)+"]["+ (row) +"] ");
             Cell rightCell = maze[col + 1][row];
-            if(!rightCell.isVisited()){
+            if(rightCell.visited()){
                 cells.add(rightCell);
             }
         }

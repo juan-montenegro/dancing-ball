@@ -32,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openSettingBtn(View view) {
-        Intent intent = new Intent(this, MainSetting.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
     public void openMainGame(View view) {
-        Intent intent = new Intent(this, MainGame.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 }

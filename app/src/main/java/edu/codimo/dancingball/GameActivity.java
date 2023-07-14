@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.hardware.SensorManager;
@@ -18,9 +17,8 @@ import android.graphics.Point;
 import android.view.Display;
 import android.hardware.SensorEventListener;
 import android.graphics.BitmapFactory;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.graphics.Paint;
@@ -31,7 +29,7 @@ import edu.codimo.dancingball.game.MazeView;
 import edu.codimo.dancingball.storage.StorageHandler;
 
 
-public class MainGame extends AppCompatActivity implements SensorEventListener {
+public class GameActivity extends AppCompatActivity implements SensorEventListener {
     private static final String[] options = { "5x5 ", "8x8", "10x10"};
     private StorageHandler storageHandler;
     private float xPos, xAccel, xVel = 0.0f;
@@ -39,6 +37,8 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
     private float xMax, yMax;
     private Bitmap ball;
     private SensorManager sensorManager;
+    private Button stopButton;
+    private Button startButton;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -47,9 +47,6 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
         storageHandler = new StorageHandler(this,getString(R.string.PREF_KEY));
         setContentView(R.layout.activity_main_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//        viewGroup = findViewById(R.id.MazeView);
-//        viewGroup.addView(new BallView(this));
-//        setContentView(ballView);
 
 //        BallView ballView = new BallView(this); // Crea una instancia de la vista de la pelota
 //        setContentView(ballView); // Establece la vista de la pelota como contenido de la actividad
@@ -61,6 +58,17 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
         yMax = (float) size.y - 100; // Calcula el límite máximo en el eje Y restando 100
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // Obtiene el manejador de sensores del sistema
+        stopButton = findViewById(R.id.StopGameBtn);
+        startButton = findViewById(R.id.StartGameBtn);
+        setButtonText();
+    }
+
+    private void setButtonText() {
+        if (startButton.isEnabled()){
+            stopButton.setText(R.string.settings_back_btn);
+        } else {
+            stopButton.setText(R.string.stop_game_btn_text);
+        }
     }
 
     @Override
@@ -143,25 +151,29 @@ public class MainGame extends AppCompatActivity implements SensorEventListener {
             String[] choice = spinnerChoice.trim().split("x");
             selectedCols = Integer.parseInt(choice[0]);
             selectedRows = Integer.parseInt(choice[1]);
-            storageHandler.writePref(getString(R.string.rows_pref_key), selectedCols);
-            storageHandler.writePref(getString(R.string.cols_pref_key), selectedRows);
-            recreate();
+            storageHandler.writePref(getString(R.string.rows_pref_key), selectedRows);
+            storageHandler.writePref(getString(R.string.cols_pref_key), selectedCols);
+            dialog.cancel();
             MazeView mazeView = findViewById(R.id.MazeView);
-            mazeView.maze.setMazeSize(cols,rows);
-            mazeView.maze.init();
-            mazeView.maze.generateMaze();
+            startButton.setEnabled(false);
+            setButtonText();
             mazeView.invalidate();
         });
         builder.setNegativeButton(getString(R.string.cancel_dialog_text), (dialog, id) -> {
+            dialog.dismiss();
             // User cancelled the dialog
-            finish();
-        });
+            });
         builder.show();
     }
 
 
     public void onStopGameClickBtn(View view) {
-        super.finish();
+        if (!startButton.isEnabled()){
+            startButton.setEnabled(true);
+            setButtonText();
+        } else {
+            finish();
+        }
     }
 
     private class BallView extends View {

@@ -13,10 +13,10 @@
         android:theme="@style/Theme.DancingBall"
         tools:targetApi="33">
         <activity
-            android:name=".MainGame"
+            android:name=".GameActivity"
             android:exported="false" />
         <activity
-            android:name=".MainSetting"
+            android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -5,7 +5,7 @@ public class Cell {
     private final Wall east;
     private final Wall south;
     private final Wall west;
-    private boolean visited = false;
+    private boolean visited;
     private final int[] position;
 
     public Cell(){
@@ -13,6 +13,7 @@ public class Cell {
         east = new Wall();
         south = new Wall();
         west = new Wall();
+        visited = false;
         position = new int[2];
     }
 
@@ -52,8 +53,8 @@ public class Cell {
         return west;
     }
 
-    public boolean isVisited() {
-        return visited;
+    public boolean visited() {
+        return !this.visited;
     }
 
     public int[] getPosition() {

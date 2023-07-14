@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import edu.codimo.dancingball.storage.StorageHandler;
 
-public class MainSetting extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
     private StorageHandler storageHandler;
     private Button ballRedBtn;
     private Button ballBlueBtn;
@@ -34,7 +34,7 @@ public class MainSetting extends AppCompatActivity {
     }
 
     public void goToGame(View view) {
-        Intent intent = new Intent(this, MainGame.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 

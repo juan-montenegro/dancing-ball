@@ -13,14 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.codimo.dancingball.R;
+import edu.codimo.dancingball.maze.Cell;
 import edu.codimo.dancingball.maze.Maze;
 import edu.codimo.dancingball.maze.Wall;
 import edu.codimo.dancingball.storage.StorageHandler;
 
 public class MazeView extends View {
-    public Maze maze;
-    private final int MAZE_COLS;
-    private final int MAZE_ROWS;
+    private Maze maze;
+    private final  StorageHandler storageHandler;
+    private int MAZE_COLS;
+    private int MAZE_ROWS;
     private float wallThickness;
     private final Paint wallPainter;
 
@@ -29,11 +31,8 @@ public class MazeView extends View {
 
     public MazeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        StorageHandler storageHandler = new StorageHandler(context, getResources().getString(R.string.PREF_KEY));
-        MAZE_COLS = storageHandler.getInt(
-                getResources().getString(R.string.cols_pref_key),5);
-        MAZE_ROWS = storageHandler.getInt(
-                getResources().getString(R.string.rows_pref_key),5);
+        storageHandler = new StorageHandler(context, getResources().getString(R.string.PREF_KEY));
+        getMazeSize();
         Point size = new Point();
         Display display = ((AppCompatActivity) getContext())
                 .getWindowManager()
@@ -45,8 +44,17 @@ public class MazeView extends View {
         wallPainter = new Paint();
         wallPainter.setColor(Color.BLACK);
         wallPainter.setStrokeWidth(wallThickness);
-        maze.generateMaze();
+//        maze.setMazeSize(MAZE_COLS,MAZE_ROWS);
+//        maze.init();
     }
+
+    private void getMazeSize() {
+        MAZE_ROWS = storageHandler.getInt(
+                getResources().getString(R.string.rows_pref_key),5);
+        MAZE_COLS = storageHandler.getInt(
+                getResources().getString(R.string.cols_pref_key),5);
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -55,6 +63,8 @@ public class MazeView extends View {
 
         int width = getWidth();
         int height = getHeight();
+        getMazeSize();
+        maze.init();
 
         int ratio = width / height;
         if (ratio < (MAZE_COLS / MAZE_ROWS)){
@@ -66,26 +76,22 @@ public class MazeView extends View {
         topMargin   = (height - MAZE_ROWS * maze.getCellSize())/2;
         canvas.translate(leftMargin, topMargin);
         drawMaze(canvas);
-        invalidate();
     }
     private void drawMaze(Canvas canvas){
         for (int x = 0; x < MAZE_COLS; x++){
             for (int y = 0; y < MAZE_ROWS; y++){
-                drawWall(canvas, maze.getMaze()[x][y].getNorth(),
-                        x, y, x + 1, y);
-                drawWall(canvas, maze.getMaze()[x][y].getSouth(),
-                        x, y + 1, x + 1, y + 1);
-                drawWall(canvas, maze.getMaze()[x][y].getWest(),
-                        x, y, x, y + 1);
-                drawWall(canvas, maze.getMaze()[x][y].getEast(),
-                        x + 1, y, x + 1, y + 1);
+                Cell cell = maze.getMaze()[x][y];
+                drawWall(canvas, cell.getNorth(), x, y, x + 1, y);
+                drawWall(canvas, cell.getSouth(), x, y + 1, x + 1, y + 1);
+                drawWall(canvas, cell.getWest(), x, y, x, y + 1);
+                drawWall(canvas, cell.getEast(), x + 1, y, x + 1, y + 1);
             }
         }
     }
 
 
     private void drawWall(Canvas canvas, Wall wall, int xInit, int yInit, int xFinal,  int yFinal) {
-        if(wall.isWall()){
+        if(wall.hasWall()){
             canvas.drawLine(
                     xInit   * maze.getCellSize(),
                     yInit   * maze.getCellSize(),

@@ -1,16 +1,16 @@
 package edu.codimo.dancingball.maze;
 
 public class Wall {
-    private boolean hasWall;
-    public Wall(){
-        this.hasWall = true;
+    private boolean hasWall = true;
+    public Wall() {
+
     }
 
-    public boolean isWall() {
+    public boolean hasWall() {
         return hasWall;
     }
 
-    public void setWall(boolean isWall) {
-        this.hasWall = isWall;
+    public void setWall(boolean hasWall) {
+        this.hasWall = hasWall;
     }
 }

@@ -8,7 +8,7 @@
     android:backgroundTint="?attr/colorOnBackground"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".MainSetting">
+    tools:context=".SettingsActivity">
 
     <Space
         android:layout_width="match_parent"
